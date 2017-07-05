@@ -9,8 +9,11 @@ trie.addAll(sequences);
 const sequencePattern = trie.toString();
 console.log(sequencePattern);
 
-for (const file of ['index.js', 'text.js']) {
+for (const file of ['index.js', 'text.js', 'emoji-censor.js']) {
 	const input = fs.readFileSync(file, 'utf8');
-	const output = input.replace('<% emojiSequence %>', sequencePattern);
+	let output = input.replace('<% emojiSequence %>', sequencePattern);
+	if (file === 'emoji-censor.js') {
+		output = output.replace('#\\*0-9\\xA9\\xAE\\u203C\\u2049\\u2122', '\\u203C\\u2049');
+	}
 	fs.writeFileSync(file, output);
 }
