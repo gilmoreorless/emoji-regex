@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const regex = require('../index.js');
 const textRegex = require('../text.js');
+const censorRegex = require('../emoji-censor.js');
 
 const regexES2015 = require('../es2015/index.js');
 const textRegexES2015 = require('../es2015/text.js');
@@ -145,3 +146,48 @@ describe('ES2015 Unicode', suite(regexES2015, textRegexES2015, (regex) => {
 		assert(/\\uD[8-9a-fA-F]/g.test(regexSource) === false);
 	});
 }));
+
+describe('custom variation for emoji-censor project', () => {
+
+	const test = (string) => {
+		it(`matches ${ string } as a single unit`, () => {
+			assert(censorRegex().test(string));
+			assert.deepEqual(string.match(censorRegex())[0], string);
+		});
+	};
+
+	const testNegative = (string) => {
+		it(`does NOT match ${ string }`, () => {
+			assert(!censorRegex().test(string));
+		})
+	}
+
+	// '#\\*0-9\\xA9\\xAE\\u203C\\u2049\\u2122', '\\u203C\\u2049'
+	const nonMatchingSymbols = new Set([
+		// Keycap base characters
+		'#', '*', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+		// Common characters not generally thought of as "emoji"
+		'©', '®', '™',
+	]);
+
+	// Test `Emoji` symbols.
+	const Emoji = require('unicode-12.0.0/Binary_Property/Emoji/symbols.js');
+	for (const symbol of Emoji) {
+		if (!nonMatchingSymbols.has(symbol)) {
+			test(symbol);
+		}
+	}
+
+	// Test all emoji sequences.
+	for (const sequence of EMOJI_SEQUENCES) {
+		test(sequence);
+	}
+
+	// Test excluded symbols
+	for (const symbol of nonMatchingSymbols) {
+		testNegative(symbol);
+	}
+
+	// TODO: Test non-spec macOS symbols
+
+});
