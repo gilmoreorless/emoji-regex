@@ -59,13 +59,13 @@ const suite = (emojiRegex, emojiWithTextRegex, additionalTests = () => {}) => ()
 		};
 
 		// Test `Emoji_Presentation` symbols.
-		const Emoji_Presentation = require('unicode-12.0.0/Binary_Property/Emoji_Presentation/symbols.js');
+		const Emoji_Presentation = require('unicode-13.0.0/Binary_Property/Emoji_Presentation/symbols.js');
 		for (const symbol of Emoji_Presentation) {
 			test(symbol);
 		}
 
 		// Test `Emoji_Modifier_Base` symbols.
-		const Emoji_Modifier_Base = require('unicode-12.0.0/Binary_Property/Emoji_Modifier_Base/symbols.js');
+		const Emoji_Modifier_Base = require('unicode-13.0.0/Binary_Property/Emoji_Modifier_Base/symbols.js');
 		for (const symbol of Emoji_Modifier_Base) {
 			test(symbol);
 		}
@@ -115,7 +115,7 @@ const suite = (emojiRegex, emojiWithTextRegex, additionalTests = () => {}) => ()
 		test('\u{1F321}');
 
 		// Test `Emoji` symbols.
-		const Emoji = require('unicode-12.0.0/Binary_Property/Emoji/symbols.js');
+		const Emoji = require('unicode-13.0.0/Binary_Property/Emoji/symbols.js');
 		for (const symbol of Emoji) {
 			test(symbol);
 		}
