@@ -171,7 +171,7 @@ describe('custom variation for emoji-censor project', () => {
 	]);
 
 	// Test `Emoji` symbols.
-	const Emoji = require('unicode-12.0.0/Binary_Property/Emoji/symbols.js');
+	const Emoji = require('unicode-13.0.0/Binary_Property/Emoji/symbols.js');
 	for (const symbol of Emoji) {
 		if (!nonMatchingSymbols.has(symbol)) {
 			test(symbol);
